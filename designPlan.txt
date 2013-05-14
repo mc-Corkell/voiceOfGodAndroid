@@ -1,0 +1,28 @@
+VOG SPECIFIC APP DESIGN/FLOW
+
+
+VOICE OF GOD 
+"The point is not the points, the point is the poetry." // or rotating string of good quotes
+OR login with Facebook button. 
+
+YOUR SLAMS
+(create new slam) - icon is number flip board with plus sign on it like make new
+show old slams - icon is flipboard, display slam name, date 
+
+CREATE SLAM
+set team or indie slam - radio buttons
+number of teams - select menu
+add team button 
+list of teams in it  - icon is microphone
+create/save button (takes you to SCORE ROUND X)
+
+ADD TEAM POPUP WINDOW 
+name  / select from names used by the user / in this tournament
+facebook page to link it with 
+
+SCORE ROUND X
+lists teams w/ microphone icon 
+next to each time shows score or create score button 
+next round button (x++); 
+
+ "the point is not the point, the point is the poetry" 

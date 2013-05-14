@@ -1,0 +1,15 @@
+ANDROID 
+layouts = views 
+View objects are widgets like buttons or text fields 
+ViewGroup objects are invisible view containers that define how the child view are laid out (like in a grid or vertical list) 
+
+XML defines these. 
+
+Intent takes two parameters, the context (activity class is a subclass of context, and the class to which the system should deliver the intent - the activity that should be started!  
+
+intent takes key name of parameter and value as second parameter. 
+In order for the next activity to query the extra data, put it as a public constant. 
+the strings at the top the public final constants are just the names of the keys that they'll use later to get the values. 
+N
+activity signals its own destruction by calling finish()
+

@@ -1,0 +1,7 @@
+ RIGHT NOW 
+- make it so it can exit back out of the login page ok 
+
+-work on slams view page
+
+- once you login if a new user u should put in a username 
+
