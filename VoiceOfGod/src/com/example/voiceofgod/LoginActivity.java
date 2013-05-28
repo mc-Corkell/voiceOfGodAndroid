@@ -7,6 +7,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -138,7 +139,8 @@ public class LoginActivity extends Activity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD) public void attemptLogin() {
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    public void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
@@ -186,12 +188,8 @@ public class LoginActivity extends Activity {
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
             mAuthTask = new UserLoginTask();
+           // AsyncTask<Void, Void, Boolean> login =
             mAuthTask.execute((Void) null);
-            
-            // if passes password inspection 
-        	Intent intent = new Intent(this, MainActivity.class);
-        	intent.putExtra(EMAIL, mEmail);
-        	startActivity(intent);
         }
     }
 
@@ -242,25 +240,58 @@ public class LoginActivity extends Activity {
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
         	VoiceOfGodDbHelper mDbHelper = new VoiceOfGodDbHelper(getBaseContext()); // Not sure what getBaseContext means
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
+            	SQLiteDatabase db = mDbHelper.getReadableDatabase();
+            	// Define a projection that specifies which columns from the database
+            	// you will actually use after this query.
+            	String[] projection = {
+            		VoiceOfGodContract.UserEntry._ID,
+            	    VoiceOfGodContract.UserEntry.COLUMN_NAME_ENTRY_ID,
+            	    VoiceOfGodContract.UserEntry.COLUMN_NAME_EMAIL,
+            	    VoiceOfGodContract.UserEntry.COLUMN_NAME_PASSWORD,
+            	    VoiceOfGodContract.UserEntry.COLUMN_NAME_USERNAME,
+            	    };
+            	
+            	String selection = VoiceOfGodContract.UserEntry.COLUMN_NAME_EMAIL + " = ? ";
+            	
+            	String[] selectionArgs = {mEmail};
+            	
+            	// How you want the results sorted in the resulting Cursor
+            	//String sortOrder = VoiceOfGodContract.UserEntry.COLUMN_NAME_UPDATED + " DESC";
+            	Cursor c = db.query(
+            		VoiceOfGodContract.UserEntry.TABLE_NAME,  // The table to query
+            	    projection,                               // The columns to return
+            	    selection,                                // The columns for the WHERE clause
+            	    selectionArgs,                            // The values for the WHERE clause
+            	    null,                                     // don't group the rows
+            	    null,                                  // don't filter by row groups
+            	    null //sortOrder                                 // The sort order
+            	    );
+            	
+            	boolean userExists = c.moveToFirst();
+            	// not sure when you should throw this exception or why
+            	if (false) {
+            		throw new InterruptedException(); 
+            	}
+            	
+            	if (userExists) {
+                	boolean correctPassword = c.getString(3).equals(mPassword);
+
+            		if(correctPassword) {
+            			return true; // found a matching user and email tuple
+            		} else {
+            			return false; // incorrect password. should display warning message
+            		}
+            	}
+
+            	
             } catch (InterruptedException e) {
-                return false;
-            }
+               return false;
+           }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-            // TODO: register the new account here.
-
+            // User not found, register new user 
             // Gets the data repository in write mode
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             
@@ -273,7 +304,8 @@ public class LoginActivity extends Activity {
             values.put(VoiceOfGodContract.UserEntry.COLUMN_NAME_LOCATION, "");
 
             // Insert the new row
-            db.insert(VoiceOfGodContract.UserEntry.TABLE_NAME, null,values);
+            long newRowId;
+            newRowId = db.insert(VoiceOfGodContract.UserEntry.TABLE_NAME, null,values);
             return true;
         }
 
@@ -281,8 +313,10 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
             if (success) {
+            	Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            	intent.putExtra(EMAIL, mEmail);
+            	startActivity(intent);
                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
