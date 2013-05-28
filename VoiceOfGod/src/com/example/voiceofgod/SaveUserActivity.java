@@ -26,7 +26,7 @@ public class SaveUserActivity extends Activity {
 		}
 		
 		Intent intent = getIntent();
-		String username = intent.getStringExtra(MainActivity.USER_NAME);
+		String username = intent.getStringExtra(MainActivity.EMAIL);
 		
 		TextView textView = new TextView(this);
 		textView.setTextSize(40);

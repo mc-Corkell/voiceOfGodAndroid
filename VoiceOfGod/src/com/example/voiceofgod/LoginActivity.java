@@ -5,7 +5,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -241,6 +243,7 @@ public class LoginActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
+        	VoiceOfGodDbHelper mDbHelper = new VoiceOfGodDbHelper(getBaseContext()); // Not sure what getBaseContext means
 
             try {
                 // Simulate network access.
@@ -256,8 +259,21 @@ public class LoginActivity extends Activity {
                     return pieces[1].equals(mPassword);
                 }
             }
-
             // TODO: register the new account here.
+
+            // Gets the data repository in write mode
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            
+            // Create a new map of values, where column names are the keys
+            ContentValues values = new ContentValues();
+            values.put(VoiceOfGodContract.UserEntry.COLUMN_NAME_ENTRY_ID, ""); // really not sure about this. 
+            values.put(VoiceOfGodContract.UserEntry.COLUMN_NAME_EMAIL, mEmail);
+            values.put(VoiceOfGodContract.UserEntry.COLUMN_NAME_PASSWORD, mPassword); // Store their password and email! 
+            values.put(VoiceOfGodContract.UserEntry.COLUMN_NAME_USERNAME, "");
+            values.put(VoiceOfGodContract.UserEntry.COLUMN_NAME_LOCATION, "");
+
+            // Insert the new row
+            db.insert(VoiceOfGodContract.UserEntry.TABLE_NAME, null,values);
             return true;
         }
 
