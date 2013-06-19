@@ -6,7 +6,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -35,6 +37,7 @@ public class LoginActivity extends Activity {
     public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 	public final static String EMAIL = "com.example.voiceofgod.EMAIL";
 
+	public static boolean logout = false; 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -54,38 +57,46 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_login);
-        setupActionBar();
         
-
-        // Set up the login form.
-        mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-        mEmailView = (EditText) findViewById(R.id.email);
-        mEmailView.setText(mEmail);
-
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mLoginStatusView = findViewById(R.id.login_status);
-        mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
-
-        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
+        // check if already logged in 
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        mEmail =sharedPref.getString(getString(R.string.current_email), null);
+     	if (mEmail != null) {
+     			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+     			intent.putExtra(EMAIL, mEmail);
+     			startActivity(intent);
+     	} else {
+	        setContentView(R.layout.activity_login);
+	        setupActionBar();
+	
+	        // Set up the login form.
+	        mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
+	        mEmailView = (EditText) findViewById(R.id.email);
+	        mEmailView.setText(mEmail);
+	
+	        mPasswordView = (EditText) findViewById(R.id.password);
+	        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+	            @Override
+	            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+	                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+	                    attemptLogin();
+	                    return true;
+	                }
+	                return false;
+	            }
+	        });
+	
+	        mLoginFormView = findViewById(R.id.login_form);
+	        mLoginStatusView = findViewById(R.id.login_status);
+	        mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+	
+	        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+	            @Override
+	            public void onClick(View view) {
+	                attemptLogin();
+	            }
+	        });
+     	}
     }
 
     /**
@@ -123,6 +134,16 @@ public class LoginActivity extends Activity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.activity_login, menu);
         return true;
+    }
+    
+    @Override
+    protected void onStop() {
+    	super.onStop(); 
+    	if (logout) {
+    		SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+        	SharedPreferences.Editor editor = sharedPref.edit();
+        	editor.remove(getString(R.string.current_email));
+    	}
     }
 
     /**
@@ -305,10 +326,17 @@ public class LoginActivity extends Activity {
             mAuthTask = null;
             showProgress(false);
             if (success) {
+            	//Write the username so user doesn't have to login all the time 
+            	SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+            	SharedPreferences.Editor editor = sharedPref.edit();
+            	editor.putString(getString(R.string.current_email), mEmail);
+            	editor.commit();
+
+            	//start the next activity! 
             	Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             	intent.putExtra(EMAIL, mEmail);
             	startActivity(intent);
-               finish();
+                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -320,5 +348,7 @@ public class LoginActivity extends Activity {
             mAuthTask = null;
             showProgress(false);
         }
+        
+
     }
 }

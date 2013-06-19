@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
+import android.content.Context;
 import android.content.Intent;
 import android.widget.EditText;
 
@@ -30,6 +31,11 @@ public class MainActivity extends Activity {
     	intent.putExtra(EMAIL, email);
     	startActivity(intent);
     	
+    }
+    
+    // to really log the user totally out
+    public void logout() {
+    	LoginActivity.logout = true;    	
     }
  
 }

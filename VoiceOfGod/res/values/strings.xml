@@ -7,6 +7,7 @@
     <string name="button_save">Save</string>
     <string name="title_activity_save_user">User</string>
     
+    <string name="current_email">Current Email</string>
     <!-- Login Strings -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
