@@ -53,19 +53,48 @@ public class LoginActivity extends Activity {
     private View mLoginFormView;
     private View mLoginStatusView;
     private TextView mLoginStatusMessageView;
-
+    
+    int time = 1; 
+    
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+    	System.out.println("onCreate  " );
+
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	System.out.println("onDestroy");
+ 
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println("onStart time " + time);
+        time++;
         
-        // check if already logged in 
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        mEmail =sharedPref.getString(getString(R.string.current_email), null);
+		SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        //check if wanted to logout 
+    	if (logout) {
+        	SharedPreferences.Editor editor = sharedPref.edit();
+        	editor.remove(getString(R.string.current_email));
+        	editor.commit();
+        	logout=false;
+    	}
+        
+       //check if already logged in 
+        mEmail = sharedPref.getString(getString(R.string.current_email), null);
      	if (mEmail != null) {
-     			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-     			intent.putExtra(EMAIL, mEmail);
-     			startActivity(intent);
-     	} else {
+     		Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+     		intent.putExtra(EMAIL, mEmail);
+            System.out.println("already logged in time " + (time-1));
+     		startActivity(intent);
+     	} else { // if not logged in, run login activity 
+            System.out.println("not logged in time " + (time-1));
 	        setContentView(R.layout.activity_login);
 	        setupActionBar();
 	
@@ -136,15 +165,17 @@ public class LoginActivity extends Activity {
         return true;
     }
     
-    @Override
+   /* @Override
     protected void onStop() {
     	super.onStop(); 
     	if (logout) {
     		SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
         	SharedPreferences.Editor editor = sharedPref.edit();
         	editor.remove(getString(R.string.current_email));
+        	editor.commit();
+        	logout=false;
     	}
-    }
+    }*/
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -336,7 +367,7 @@ public class LoginActivity extends Activity {
             	Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             	intent.putExtra(EMAIL, mEmail);
             	startActivity(intent);
-                finish();
+               // finish();  -- this activity will always be here so if you logout you'll go back to the login page :)
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

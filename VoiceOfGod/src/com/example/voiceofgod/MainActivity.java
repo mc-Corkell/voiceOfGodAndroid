@@ -25,17 +25,19 @@ public class MainActivity extends Activity {
     
     // Called when user clicks Save button 
     public void saveUser(View view) {
-    	Intent intent = new Intent(this, SaveUserActivity.class);
+    	/*Intent intent = new Intent(this, SaveUserActivity.class);
     	EditText editText = (EditText) findViewById(R.id.new_user_message);
     	String email = editText.getText().toString();
     	intent.putExtra(EMAIL, email);
-    	startActivity(intent);
+    	startActivity(intent);*/
+    	logout();
     	
     }
     
     // to really log the user totally out
     public void logout() {
     	LoginActivity.logout = true;    	
+    	super.finish();
     }
  
 }
