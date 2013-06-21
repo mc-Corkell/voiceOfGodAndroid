@@ -54,28 +54,20 @@ public class LoginActivity extends Activity {
     private View mLoginStatusView;
     private TextView mLoginStatusMessageView;
     
-    int time = 1; 
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-    	System.out.println("onCreate  " );
-
     }
     
     @Override
     protected void onDestroy() {
-    	super.onDestroy();
-    	System.out.println("onDestroy");
- 
+    	super.onDestroy(); 
     }
     
     @Override
     protected void onStart() {
         super.onStart();
-        System.out.println("onStart time " + time);
-        time++;
         
 		SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         //check if wanted to logout 
@@ -91,10 +83,8 @@ public class LoginActivity extends Activity {
      	if (mEmail != null) {
      		Intent intent = new Intent(LoginActivity.this, MainActivity.class);
      		intent.putExtra(EMAIL, mEmail);
-            System.out.println("already logged in time " + (time-1));
      		startActivity(intent);
      	} else { // if not logged in, run login activity 
-            System.out.println("not logged in time " + (time-1));
 	        setContentView(R.layout.activity_login);
 	        setupActionBar();
 	
@@ -165,17 +155,6 @@ public class LoginActivity extends Activity {
         return true;
     }
     
-   /* @Override
-    protected void onStop() {
-    	super.onStop(); 
-    	if (logout) {
-    		SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
-        	SharedPreferences.Editor editor = sharedPref.edit();
-        	editor.remove(getString(R.string.current_email));
-        	editor.commit();
-        	logout=false;
-    	}
-    }*/
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -357,6 +336,8 @@ public class LoginActivity extends Activity {
             mAuthTask = null;
             showProgress(false);
             if (success) {
+            	
+            	System.out.println("entered information in login fomr woot");
             	//Write the username so user doesn't have to login all the time 
             	SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
             	SharedPreferences.Editor editor = sharedPref.edit();
@@ -366,6 +347,8 @@ public class LoginActivity extends Activity {
             	//start the next activity! 
             	Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             	intent.putExtra(EMAIL, mEmail);
+                System.out.println("before starting the activity");
+
             	startActivity(intent);
                // finish();  -- this activity will always be here so if you logout you'll go back to the login page :)
             } else {

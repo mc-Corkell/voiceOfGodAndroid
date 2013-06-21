@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_team_slam"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:scrollbars="vertical" 
+    tools:context=".NewTeamSlam">
+       
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content"
+       android:layout_gravity="center">
+            <TextView
+				android:layout_width="wrap_content" 
+   				android:layout_height="wrap_content" 
+   				android:text="@string/num_teams"/> 
+	        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+	         android:id="@+id/radiogroup"
+	         android:checkedButton="@+id/radio_4"
+	   		 android:layout_width="wrap_content"
+	   		 android:layout_height="wrap_content"
+	   		 android:orientation="horizontal">
+				 <RadioButton android:id="@+id/radio_3"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="3"
+					android:onClick="onRadioButtonClicked"/>
+				<RadioButton android:id="@+id/radio_4"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="4"
+					android:onClick="onRadioButtonClicked"/>
+				<RadioButton android:id="@+id/radio_5"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="5"
+					android:onClick="onRadioButtonClicked"/>
+			</RadioGroup>
+        
+		 <EditText
+                android:id="@+id/host"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:maxLength="75"
+                android:hint="@string/prompt_host" />
+		 <EditText
+                android:id="@+id/venue"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:maxLength="75"
+                android:hint="@string/prompt_venue" />
+		 <!-- date picker doesn't work yet 
+		 <Button 
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:text="@string/pick_date" 
+			    android:onClick="showDatePickerDialog" />
+		 				<TextView
+				android:layout_width="wrap_content" 
+   				android:layout_height="wrap_content" 
+   				android:text="@string/poem_time"/> -->
+		  <LinearLayout
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+ 
+			 	 <EditText
+	                android:id="@+id/poem_mins"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:inputType="number"
+	                						android:gravity="center"
+	                
+					android:maxLength="3"
+	                android:text="3" />
+			<TextView
+				android:layout_width="wrap_content" 
+   				android:layout_height="wrap_content" 
+   				android:text="@string/poem_min"/> 
+				 <EditText
+		                android:id="@+id/poem_seconds"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:inputType="number"
+						android:maxLength="2"
+						android:gravity="center"
+		                android:text="30" />
+				 	<TextView
+				android:layout_width="wrap_content" 
+   				android:layout_height="wrap_content" 
+   				android:text="@string/poem_sec"/> 
+		  </LinearLayout>
+		  <Button android:id="@+id/save_slam_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/save_slam"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:layout_gravity="center" 
+                android:onClick="saveSlam"/>
+    </LinearLayout>
+</ScrollView>

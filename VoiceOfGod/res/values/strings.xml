@@ -3,9 +3,15 @@
 
     <string name="app_name">Voice of God</string>
     <string name="menu_settings">Settings</string>
+    
+    <!--  User Homepage -->
+    <string name="user_homepage">My Slams</string>
     <string name="new_user_message">Enter a username!</string>
-    <string name="button_save">Save And Logout</string>
-    <string name="title_activity_save_user">User</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_create_slam">Create A Slam</string>
+    <string name="new_team_slam">Create A Slam</string>
+    <string name="point">the point is not the points, the point is the poetry</string>
+    
     
     <string name="current_email">Current Email</string>
     <!-- Login Strings -->
@@ -26,5 +32,17 @@
      
      <!-- User View -->
     <string name="user_activity">Your Slams</string>
+    
+    <!-- New Team Slam -->
+    <string name="prompt_host">Host Name</string>
+    <string name="prompt_venue">Venue Name</string>
+    <string name="pick_date">Change Date</string>
+    <string name="save_slam">Save Slam</string>
+    <string name="num_teams"># of Teams:</string>
+	<string name="poem_time">Poem Time Limit:</string>
+    <string name="poem_min">Min</string>
+   	<string name="poem_sec">Sec</string>
+        
+    
 
 </resources>

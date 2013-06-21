@@ -10,12 +10,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/microphone"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.voiceofgod.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/user_homepage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.voiceofgod.LoginActivity" />
@@ -29,12 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.voiceofgod.SaveUserActivity"
-            android:label="@string/title_activity_save_user"
-            android:parentActivityName="com.example.voiceofgod.MainActivity" >
+            android:name="com.example.voiceofgod.NewTeamSlam"
+            android:label="@string/title_activity_create_slam"
+            android:parentActivityName="com.example.voiceofgod.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.voiceofgod.MainActivity" />
+                android:value="com.example.voiceofgod.LoginActivity" />
         </activity>
     </application>
 
