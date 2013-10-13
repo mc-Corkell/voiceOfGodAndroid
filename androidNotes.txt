@@ -1,4 +1,7 @@
 ANDROID 
+
+There are activities, there's the main activity and the program flows around from the opening and closing of those. 
+
 layouts = views 
 View objects are widgets like buttons or text fields 
 ViewGroup objects are invisible view containers that define how the child view are laid out (like in a grid or vertical list) 
@@ -12,4 +15,9 @@ In order for the next activity to query the extra data, put it as a public const
 the strings at the top the public final constants are just the names of the keys that they'll use later to get the values. 
 N
 activity signals its own destruction by calling finish()
+finish() calls onDestroy(); 
 
+sqlite returns a cursor to iterate over the db
+
+TO DEBUG 
+System.out.println goes to the LogCat, use the tag:System.out in the search bar! 
