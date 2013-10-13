@@ -26,3 +26,18 @@ next to each time shows score or create score button
 next round button (x++); 
 
  "the point is not the point, the point is the poetry" 
+
+
+design ideas: 
+have the number 10 for the app logo
+have the 3 mics for the slam logo 
+have 1 mic for the person logo 
+
+NA nevermind. use words. 
+have the mic for the app logo. 
+have create slam button. 
+have add poet button. 
+have add score button. 
+
+like those actual words. because of usability disability issues!! 
+, people unfamiliar with smart phones, etc. accessibility issues!! 
