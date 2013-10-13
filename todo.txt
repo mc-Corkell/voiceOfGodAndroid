@@ -1,7 +1,21 @@
- RIGHT NOW 
-- make it so it can exit back out of the login page ok 
+ASAP 
+- when you enter 5 scores it drops lowest and highest and gives you sum 
+- built in timer with that 
 
+PRONTO 
+- when you make a slam, it needs to save it to the database 
+- refactor so first activity on app is making a slam, later make username etc.
 -work on slams view page
-
 - once you login if a new user u should put in a username 
 
+SOON
+- user homepage
+- user add poets to slam
+- user add scores
+- app calculates scores
+- app calculates time penalty 
+
+WHEN PIGS FLY 
+- make sure unique email names 
+- send email if can't remember password 
+- new slam form --> tournament?? 
